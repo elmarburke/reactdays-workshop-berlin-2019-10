@@ -1,15 +1,15 @@
 import React from "react";
+import { Message } from "../domain/Message";
 
 interface Props {
-  opinion: string;
-  name: string;
+  message: Message;
 }
 
-const MessageView: React.FunctionComponent<Props> = ({ name, opinion }) => {
+const MessageView: React.FunctionComponent<Props> = ({ message }) => {
   return (
     <article>
-      {opinion}
-      <footer>By: {name}</footer>
+      {message.message}
+      <footer>By: {message.author}</footer>
     </article>
   );
 };
