@@ -1,5 +1,6 @@
 import React from "react";
 import MessageView from "./components/MessageView";
+import MessageCompose from "./components/MessageCompose";
 import { Message } from "./domain/Message";
 
 function App(): JSX.Element {
@@ -12,6 +13,7 @@ function App(): JSX.Element {
 
   return (
     <React.Fragment>
+      <MessageCompose />
       <MessageView
         message={{
           id: "123",
