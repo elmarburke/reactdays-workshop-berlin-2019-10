@@ -20,7 +20,10 @@ function App(): JSX.Element {
     <React.Fragment>
       <MessageCompose
         onMessageSubmit={message => {
-          console.log("wir haben eine message", message);
+          setMessageList(currentMessageList => [
+            ...currentMessageList,
+            message
+          ]);
         }}
       />
       <MessageList messages={messageList} />
