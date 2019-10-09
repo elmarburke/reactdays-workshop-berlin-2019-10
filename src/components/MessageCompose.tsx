@@ -1,14 +1,24 @@
 import React, { useState } from "react";
+import { Message } from "../domain/Message";
 
-interface Props {}
+interface Props {
+  onMessageSubmit: (message: Message) => void;
+}
 
-const MessageCompose: React.FunctionComponent<Props> = () => {
+const MessageCompose: React.FunctionComponent<Props> = ({
+  onMessageSubmit
+}) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    console.log(["hip", "hip"]);
+    onMessageSubmit({
+      id: String(Date.now()),
+      message: inputValue,
+      author: "Our App",
+      date: Date.now()
+    });
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

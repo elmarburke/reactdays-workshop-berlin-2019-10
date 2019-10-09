@@ -18,7 +18,11 @@ function App(): JSX.Element {
 
   return (
     <React.Fragment>
-      <MessageCompose />
+      <MessageCompose
+        onMessageSubmit={message => {
+          console.log("wir haben eine message", message);
+        }}
+      />
       <MessageList messages={messageList} />
     </React.Fragment>
   );
