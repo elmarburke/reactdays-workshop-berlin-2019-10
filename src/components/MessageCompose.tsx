@@ -34,7 +34,7 @@ const MessageCompose: React.FunctionComponent<Props> = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      <input onChange={handleChange} value={inputValue} />
+      <input onChange={handleChange} value={inputValue} placeholder="Message" />
       <button type="submit">✉ Send</button>
       {inputValue}
     </form>
