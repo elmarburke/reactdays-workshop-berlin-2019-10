@@ -19,6 +19,8 @@ const MessageCompose: React.FunctionComponent<Props> = ({
       author: "Our App",
       date: Date.now()
     });
+
+    setInputValue("");
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +29,7 @@ const MessageCompose: React.FunctionComponent<Props> = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      <input onChange={handleChange} />
+      <input onChange={handleChange} value={inputValue} />
       <button type="submit">✉ Send</button>
       {inputValue}
     </form>
