@@ -11,8 +11,8 @@ function App(): JSX.Element {
       <MessageCompose
         onMessageSubmit={message => {
           setMessageList(currentMessageList => [
-            ...currentMessageList,
-            message
+            message,
+            ...currentMessageList
           ]);
         }}
       />

@@ -3,11 +3,11 @@ import { Message } from "../domain/Message";
 import MessageView from "./MessageView";
 
 interface Props {
-    messages: Message[];
+  messages: Message[];
 }
 
 const MessageList: React.FunctionComponent<Props> = ({ messages }) => {
-   return (
+  return (
     <React.Fragment>
       {messages.map(message => (
         <MessageView key={message.id} message={message} />
