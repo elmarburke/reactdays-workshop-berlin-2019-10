@@ -21,7 +21,7 @@ function App(): JSX.Element {
             ]);
           }}
         />
-        <MessageList messages={messageList} />
+        <MessageList />
       </main>
     </Provider>
   );

@@ -2,18 +2,32 @@ import { createStore, compose, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { Message } from "../domain/Message";
 
-export interface ApplicationState {}
+export interface ApplicationState {
+  messages: Message[];
+}
 
-const initialState: ApplicationState = {};
+const initialState: ApplicationState = {
+  messages: []
+};
 
 interface InitAction {
   type: "@@INIT";
 }
 
-export type Actions = InitAction;
+interface AddMessage {
+  type: "ADD_MESSAGE";
+  message: Message;
+}
+
+export type Actions = InitAction | AddMessage;
 
 const reducer = (state = initialState, action: Actions): ApplicationState => {
   switch (action.type) {
+    case "ADD_MESSAGE":
+      return {
+        ...state,
+        messages: [...state.messages, action.message]
+      };
     default:
       return state;
   }
