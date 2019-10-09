@@ -13,6 +13,11 @@ const MessageCompose: React.FunctionComponent<Props> = ({
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (inputValue === "") {
+      console.info("empty form");
+      return;
+    }
+
     onMessageSubmit({
       id: String(Date.now()),
       message: inputValue,

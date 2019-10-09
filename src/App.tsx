@@ -4,17 +4,7 @@ import MessageCompose from "./components/MessageCompose";
 import { Message } from "./domain/Message";
 
 function App(): JSX.Element {
-  const messages: Message[] = [
-    { id: "1", author: "Christian", message: "Guten Morgen", date: 42 },
-    {
-      id: "2",
-      author: "Elmar",
-      message: "Spreek me gerust vanavond aan",
-      date: 1982
-    }
-  ];
-
-  const [messageList, setMessageList] = useState(messages);
+  const [messageList, setMessageList] = useState<Message[]>([]);
 
   return (
     <React.Fragment>
