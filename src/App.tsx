@@ -8,8 +8,6 @@ import { configureStore } from "./state";
 const store = configureStore();
 
 function App(): JSX.Element {
-  const [messageList, setMessageList] = useState<Message[]>([]);
-
   return (
     <Provider store={store}>
       <main>

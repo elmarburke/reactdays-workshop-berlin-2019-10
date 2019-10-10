@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Message } from "../domain/Message";
 import MessageView from "./MessageView";
-import { ApplicationState } from "../state";
+import { ApplicationState, fetchMessagesFromServer } from "../state";
 
-interface InnerProps {
+interface StateProps {
   messages: Message[];
 }
 
-const MessageList: React.FunctionComponent<InnerProps> = ({ messages }) => {
+interface ActionCreatorProps {
+  fetchMessagesFromServer: () => void;
+}
+
+const MessageList: React.FunctionComponent<StateProps & ActionCreatorProps> = ({
+  messages,
+  fetchMessagesFromServer
+}) => {
+  useEffect(() => {
+    fetchMessagesFromServer();
+  }, [fetchMessagesFromServer]);
+
   return (
     <React.Fragment>
       {messages.map(message => (
@@ -18,10 +29,17 @@ const MessageList: React.FunctionComponent<InnerProps> = ({ messages }) => {
   );
 };
 
-const mapStateToProps = (state: ApplicationState): InnerProps => {
+const mapStateToProps = (state: ApplicationState): StateProps => {
   return {
     messages: state.messages
   };
 };
 
-export default connect(mapStateToProps)(MessageList);
+const mapDispatchToProps = {
+  fetchMessagesFromServer
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MessageList);
