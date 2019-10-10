@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Message } from "../domain/Message";
+import { connect } from "react-redux";
+import {addMessage} from "../state/index"
 
 interface Props {
   onMessageSubmit: (message: Message) => void;
@@ -41,4 +43,8 @@ const MessageCompose: React.FunctionComponent<Props> = ({
   );
 };
 
-export default MessageCompose;
+const mapDispatchToProps = {
+  onMessageSubmit: addMessage,
+}
+
+export default connect(null, mapDispatchToProps)(MessageCompose);

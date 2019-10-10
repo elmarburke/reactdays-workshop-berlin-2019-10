@@ -21,6 +21,14 @@ interface AddMessage {
 
 export type Actions = InitAction | AddMessage;
 
+// "action creators" are function that create action objects
+export const addMessage = (message: Message): AddMessage => {
+  return {
+    type: "ADD_MESSAGE",
+    message: message
+  };
+};
+
 const reducer = (state = initialState, action: Actions): ApplicationState => {
   switch (action.type) {
     case "ADD_MESSAGE":
