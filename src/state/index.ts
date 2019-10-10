@@ -1,4 +1,4 @@
-import { createStore, compose, applyMiddleware } from "redux";
+import { createStore, compose, applyMiddleware, Dispatch } from "redux";
 import thunk from "redux-thunk";
 import { Message } from "../domain/Message";
 
@@ -19,7 +19,12 @@ interface AddMessage {
   message: Message;
 }
 
-export type Actions = InitAction | AddMessage;
+interface FetchAllMessages {
+  type: "FETCH_ALL_MESSAGES";
+  messages: Message[];
+}
+
+export type Actions = InitAction | AddMessage | FetchAllMessages;
 
 // "action creators" are function that create action objects
 export const addMessage = (message: Message): AddMessage => {
@@ -29,12 +34,27 @@ export const addMessage = (message: Message): AddMessage => {
   };
 };
 
+// "action creators" are function that create action objects
+export const fetchAllMessages = () => async (dispatch: Dispatch<Actions>) => {
+  const response = await fetch("http://localhost:4712/messages");
+  const data = await response.json();
+  dispatch({
+    type: "FETCH_ALL_MESSAGES",
+    messages: data
+  });
+};
+
 const reducer = (state = initialState, action: Actions): ApplicationState => {
   switch (action.type) {
     case "ADD_MESSAGE":
       return {
         ...state,
         messages: [...state.messages, action.message]
+      };
+    case "FETCH_ALL_MESSAGES":
+      return {
+        ...state,
+        messages: action.messages
       };
     default:
       return state;

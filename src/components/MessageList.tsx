@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Message } from "../domain/Message";
 import MessageView from "./MessageView";
-import { ApplicationState } from "../state";
+import { ApplicationState, fetchAllMessages } from "../state";
 
 interface InnerProps {
   messages: Message[];
+  fetchAllMessages: () => void;
 }
 
-const MessageList: React.FunctionComponent<InnerProps> = ({ messages }) => {
+const MessageList: React.FunctionComponent<InnerProps> = ({
+  messages,
+  fetchAllMessages
+}) => {
+  useEffect(() => {
+    fetchAllMessages();
+  }, [fetchAllMessages]);
   return (
     <React.Fragment>
       {messages.map(message => (
@@ -18,10 +25,17 @@ const MessageList: React.FunctionComponent<InnerProps> = ({ messages }) => {
   );
 };
 
-const mapStateToProps = (state: ApplicationState): InnerProps => {
+const mapStateToProps = (state: ApplicationState) => {
   return {
     messages: state.messages
   };
 };
 
-export default connect(mapStateToProps)(MessageList);
+const mapDispatchToProps = {
+  fetchAllMessages: fetchAllMessages
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MessageList);
