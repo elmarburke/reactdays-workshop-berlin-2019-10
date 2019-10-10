@@ -1,6 +1,7 @@
 import { createStore, compose, applyMiddleware, Dispatch } from "redux";
 import thunk from "redux-thunk";
 import { Message } from "../domain/Message";
+import ourMiddleware from "./middleware";
 
 export interface ApplicationState {
   messages: Message[];
@@ -35,13 +36,22 @@ export const addMessage = (message: Message): AddMessage => {
 };
 
 // "action creators" are function that create action objects
-export const fetchAllMessages = () => async (dispatch: Dispatch<Actions>) => {
+export const fetchAllMessages2 = () => async (dispatch: Dispatch<Actions>) => {
   const response = await fetch("http://localhost:4712/messages");
   const data = await response.json();
   dispatch({
     type: "FETCH_ALL_MESSAGES",
     messages: data
   });
+};
+
+export const fetchAllMessages = () => {
+  return {
+    type: "FETCH_ALL_MESSAGES",
+    isApiAction: true,
+    url: "/messages",
+    propertyName: "messages"
+  };
 };
 
 const reducer = (state = initialState, action: Actions): ApplicationState => {
@@ -69,5 +79,8 @@ export const configureStore = () => {
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   // jetzt ist wieder alles gut
 
-  return createStore(reducer, composeEnhancer(applyMiddleware(thunk)));
+  return createStore(
+    reducer,
+    composeEnhancer(applyMiddleware(ourMiddleware), applyMiddleware(thunk))
+  );
 };
