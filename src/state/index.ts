@@ -19,6 +19,13 @@ interface AddMessage {
   message: Message;
 }
 
+export const addMessage = (message: Message): AddMessage => {
+  return {
+    type: "ADD_MESSAGE",
+    message
+  };
+};
+
 export type Actions = InitAction | AddMessage;
 
 const reducer = (state = initialState, action: Actions): ApplicationState => {

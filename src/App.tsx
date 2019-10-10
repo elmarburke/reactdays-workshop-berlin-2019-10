@@ -13,14 +13,7 @@ function App(): JSX.Element {
   return (
     <Provider store={store}>
       <main>
-        <MessageCompose
-          onMessageSubmit={message => {
-            setMessageList(currentMessageList => [
-              message,
-              ...currentMessageList
-            ]);
-          }}
-        />
+        <MessageCompose />
         <MessageList />
       </main>
     </Provider>
