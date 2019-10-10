@@ -1,6 +1,8 @@
 import { createStore, compose, applyMiddleware, Dispatch } from "redux";
 import thunk from "redux-thunk";
 import { Message } from "../domain/Message";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
 export interface ApplicationState {
   messages: Message[];
@@ -95,12 +97,23 @@ export const configureStore = () => {
     // @ts-ignore
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   // jetzt ist wieder alles gut
+  const persistConfig = {
+    key: "root",
+    storage
+  };
 
-  return createStore(
-    reducer,
+  const persistedReducer = persistReducer(persistConfig, reducer);
+  const store = createStore(
+    persistedReducer,
     composeEnhancer(
       applyMiddleware(apiRequestMiddleware),
       applyMiddleware(thunk)
     )
   );
+  let persistor = persistStore(store);
+
+  return {
+    persistor,
+    store
+  };
 };

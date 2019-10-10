@@ -4,16 +4,19 @@ import MessageList from "./components/MessageList";
 import MessageCompose from "./components/MessageCompose";
 import { Message } from "./domain/Message";
 import { configureStore } from "./state";
+import { PersistGate } from "redux-persist/integration/react";
 
-const store = configureStore();
+const { store, persistor } = configureStore();
 
 function App(): JSX.Element {
   return (
     <Provider store={store}>
-      <main>
-        <MessageCompose />
-        <MessageList />
-      </main>
+      <PersistGate loading={null} persistor={persistor}>
+        <main>
+          <MessageCompose />
+          <MessageList />
+        </main>
+      </PersistGate>
     </Provider>
   );
 }
